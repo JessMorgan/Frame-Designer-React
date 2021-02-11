@@ -6,7 +6,6 @@ const FrameDesignerForm = props => {
     props.update({...props.state, [key]: value});
   }
   const toggleMat = () => {
-    document.getElementById('matOptions').style.display = props.state.mat ? 'none' : 'block';
     props.update({...props.state, 'mat': !props.state.mat});
   }
   return(
@@ -28,11 +27,13 @@ const FrameDesignerForm = props => {
         <legend>Mat Options:</legend>
         <input type="checkbox" name="mat" id="mat" onChange={toggleMat} checked={props.state.mat}/>
         <label htmlFor="mat">Add Mat</label>
-        <div id="matOptions">
-          {/* Dropdown/radio for color */}
-          <NumberField name="matOpeningWidth" label="Mat Opening Width:" value={props.state.matOpeningWidth} setValue={updateValue} allowDecimal={true} />
-          <NumberField name="matOpeningHeight" label="Mat Opening Height:" value={props.state.matOpeningHeight} setValue={updateValue} allowDecimal={true} />
-        </div>
+        { props.state.mat &&
+          <div>
+          { /* Dropdown/radio for color */ }
+            <NumberField name="matOpeningWidth" label="Mat Opening Width:" value={props.state.matOpeningWidth} setValue={updateValue} allowDecimal={true} />
+            <NumberField name="matOpeningHeight" label="Mat Opening Height:" value={props.state.matOpeningHeight} setValue={updateValue} allowDecimal={true} />
+          </div>
+        }
       </fieldset>
     </form>
   );
