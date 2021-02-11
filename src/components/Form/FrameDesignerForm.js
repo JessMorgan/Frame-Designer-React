@@ -1,9 +1,13 @@
 import React from 'react';
 import NumberField from './NumberField';
+import Select from './Select';
 
 const FrameDesignerForm = props => {
   const updateValue = (key, value) => {
     props.update({...props.state, [key]: value});
+  }
+  const updateByEvent = (event) => {
+    updateValue(event.currentTarget.name, event.currentTarget.value);
   }
   const toggleMat = () => {
     props.update({...props.state, 'mat': !props.state.mat});
@@ -22,6 +26,11 @@ const FrameDesignerForm = props => {
         stripes
         profiles
         glazing */}
+        <Select name="wood" label="Wood:" options={props.woods} selected={props.state.wood} onChange={updateByEvent} />
+        <Select name="stripes" label="Number of Stripes:" options={[0,1,2]} selected={props.state.stripes} onChange={updateByEvent} />
+        {props.state.stripes >= 1 &&
+          <Select name="stripeWood" label="Stripe Wood:" options={props.woods} selected={props.state.stripeWood} onChange={updateByEvent} />
+        }
       </fieldset>
       <fieldset>
         <legend>Mat Options:</legend>
@@ -29,9 +38,9 @@ const FrameDesignerForm = props => {
         <label htmlFor="mat">Add Mat</label>
         { props.state.mat &&
           <div>
-          { /* Dropdown/radio for color */ }
-            <NumberField name="matOpeningWidth" label="Mat Opening Width:" value={props.state.matOpeningWidth} setValue={updateValue} allowDecimal={true} />
-            <NumberField name="matOpeningHeight" label="Mat Opening Height:" value={props.state.matOpeningHeight} setValue={updateValue} allowDecimal={true} />
+            <Select name="matColor" label="Mat Color:" options={props.matColors} selected={props.state.matColor} onChange={updateByEvent} />
+            <NumberField name="matOpeningWidth" label="Matted Object Width:" value={props.state.matOpeningWidth} setValue={updateValue} allowDecimal={true} />
+            <NumberField name="matOpeningHeight" label="Matted Object Height:" value={props.state.matOpeningHeight} setValue={updateValue} allowDecimal={true} />
           </div>
         }
       </fieldset>
