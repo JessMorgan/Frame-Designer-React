@@ -1,7 +1,7 @@
 {
-  "#FFF":"White",
-  "#FFA":"Beige",
-  "#080":"Blue",
-  "#800":"Red",
-  "#000":"Black"
+  "White":"#FFF",
+  "Beige":"#FFA",
+  "Blue":"#080",
+  "Red":"#800",
+  "Black":"#000"
 }

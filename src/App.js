@@ -20,11 +20,11 @@ const App = () => {
           return response.json();
         }
       })
-      .then(colors => {setMatColors(Object.entries(colors))})
+      .then(colors => {setMatColors(colors)})
       .catch(error => console.log(`Error fetching mat colors: ${error}`));
   }, []);
   const [woodChoices, setWoodChoices] = React.useState([]);
-  const [matColors, setMatColors] = React.useState([[]]);
+  const [matColors, setMatColors] = React.useState({});
   const [state, setState] = React.useState({
     'width': 7,
     'height': 5,
@@ -32,10 +32,10 @@ const App = () => {
     'wood': 'Walnut',
     'stripes': 1,
     'stripeWood': 'Maple',
-    'profile': 'rectangular',
-    'glazing': 'glass',
+    'profile': 'Rectangular',
+    'glazing': 'Glass',
     'mat': true,
-    'matColor': '#080',
+    'matColor': 'Blue',
     'matOpeningWidth': 5,
     'matOpeningHeight': 3
   });

@@ -38,7 +38,7 @@ const FrameDesignerForm = props => {
         <label htmlFor="mat">Add Mat</label>
         { props.state.mat &&
           <div>
-            <Select name="matColor" label="Mat Color:" options={props.matColors} selected={props.state.matColor} onChange={updateByEvent} />
+            <Select name="matColor" label="Mat Color:" options={Object.entries(props.matColors).map(entry => entry[0])} selected={props.state.matColor} onChange={updateByEvent} />
             <NumberField name="matOpeningWidth" label="Matted Object Width:" value={props.state.matOpeningWidth} setValue={updateValue} allowDecimal={true} />
             <NumberField name="matOpeningHeight" label="Matted Object Height:" value={props.state.matOpeningHeight} setValue={updateValue} allowDecimal={true} />
           </div>
