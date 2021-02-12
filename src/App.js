@@ -22,9 +22,18 @@ const App = () => {
       })
       .then(colors => {setMatColors(colors)})
       .catch(error => console.log(`Error fetching mat colors: ${error}`));
+    fetch('/profiles.txt')
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .then(profiles => {setProfileOptions(profiles);})
+      .catch(error => console.log(`Error fetching profile options: ${error}`));
   }, []);
   const [woodChoices, setWoodChoices] = React.useState([]);
   const [matColors, setMatColors] = React.useState({});
+  const [profileOptions, setProfileOptions] = React.useState([]);
   const [state, setState] = React.useState({
     'width': 7,
     'height': 5,
@@ -41,7 +50,7 @@ const App = () => {
   });
   return (
     <div className="App">
-      <FrameDesignerForm state={state} update={setState} woods={woodChoices} matColors={matColors}/>
+      <FrameDesignerForm state={state} update={setState} woods={woodChoices} matColors={matColors} profileOptions={profileOptions}/>
       <Preview state={state}/>
     </div>
   );

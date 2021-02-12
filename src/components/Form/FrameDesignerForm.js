@@ -22,15 +22,14 @@ const FrameDesignerForm = props => {
       </fieldset>
       <fieldset>
         <legend>Frame Style:</legend>
-        {/* wood radios
-        stripes
-        profiles
-        glazing */}
+        {/* wood radios */}
         <Select name="wood" label="Wood:" options={props.woods} selected={props.state.wood} onChange={updateByEvent} />
         <Select name="stripes" label="Number of Stripes:" options={[0,1,2]} selected={props.state.stripes} onChange={updateByEvent} />
         {props.state.stripes >= 1 &&
           <Select name="stripeWood" label="Stripe Wood:" options={props.woods} selected={props.state.stripeWood} onChange={updateByEvent} />
         }
+        <Select name="profile" label="Profile:" options={props.profileOptions} selected={props.state.profile} onChange={updateByEvent} />
+        <Select name="glazing" label="Glazing:" options={["Glass","No Glass"]} selected={props.state.glazing} onChange={updateByEvent} />
       </fieldset>
       <fieldset>
         <legend>Mat Options:</legend>
