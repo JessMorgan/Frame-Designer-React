@@ -1,1 +1,7 @@
-["White","Beige","Blue","Red","Black"]
+{
+  "#FFF":"White",
+  "#FFA":"Beige",
+  "#080":"Blue",
+  "#800":"Red",
+  "#000":"Black"
+}
