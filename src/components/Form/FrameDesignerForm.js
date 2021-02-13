@@ -16,9 +16,9 @@ const FrameDesignerForm = props => {
     <form className="wwbjFrameDesigner">
       <fieldset>
         <legend>Frame Dimensions:</legend>
-        <NumberField name="width" label="Width:" value={props.state.width} setValue={updateValue} allowDecimal={true} />
-        <NumberField name="height" label="Height:" value={props.state.height} setValue={updateValue} allowDecimal={true} />
-        <NumberField name="thickness" label="Frame Thickness:" value={props.state.thickness} setValue={updateValue} allowDecimal={true} />
+        <NumberField name="width" label="Width:" value={props.state.width} setValue={updateValue} allowDecimal={true} max="36" />
+        <NumberField name="height" label="Height:" value={props.state.height} setValue={updateValue} allowDecimal={true} max="24" />
+        <NumberField name="thickness" label="Frame Thickness:" value={props.state.thickness} setValue={updateValue} allowDecimal={true} max="6" />
       </fieldset>
       <fieldset>
         <legend>Frame Style:</legend>
@@ -38,8 +38,8 @@ const FrameDesignerForm = props => {
         { props.state.mat &&
           <div>
             <Select name="matColor" label="Mat Color:" options={Object.entries(props.matColors).map(entry => entry[0])} selected={props.state.matColor} onChange={updateByEvent} />
-            <NumberField name="matOpeningWidth" label="Matted Object Width:" value={props.state.matOpeningWidth} setValue={updateValue} allowDecimal={true} />
-            <NumberField name="matOpeningHeight" label="Matted Object Height:" value={props.state.matOpeningHeight} setValue={updateValue} allowDecimal={true} />
+            <NumberField name="matOpeningWidth" label="Matted Object Width:" value={props.state.matOpeningWidth} setValue={updateValue} allowDecimal={true} max="34" />
+            <NumberField name="matOpeningHeight" label="Matted Object Height:" value={props.state.matOpeningHeight} setValue={updateValue} allowDecimal={true} max="22" />
           </div>
         }
       </fieldset>

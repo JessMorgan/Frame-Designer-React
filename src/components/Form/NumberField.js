@@ -2,16 +2,21 @@ import React from 'react';
 
 const NumberField = props => {
   const changeHandler = event => {
+    let newValue = 0;
     if (props.allowDecimal) {
-      let newValue = event.currentTarget.value.replace(/[^0-9\.]/g, '');
+      newValue = event.currentTarget.value.replace(/[^0-9\.]/g, '');
       if (newValue.indexOf('.') != newValue.lastIndexOf('.')) {
         let values = newValue.split('.');
         newValue = values.shift() + '.' + values.join('');
       }
-      props.setValue(event.currentTarget.name, newValue);
     } else {
-      props.setValue(event.currentTarget.name, event.currentTarget.value.replace(/[^0-9]/g, ''));
+      newValue =  event.currentTarget.value.replace(/[^0-9]/g, '');
     }
+    debugger
+    if (props.max && Number(newValue) > Number(props.max)) {
+      newValue = props.max;
+    }
+    props.setValue(event.currentTarget.name, newValue);
   };
   return(
     <div>
