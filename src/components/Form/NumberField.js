@@ -19,7 +19,9 @@ const NumberField = props => {
   };
   const ensureMin = event => {
     if (props.min && Number(event.currentTarget.value) < Number(props.min)) {
-      props.setValue(event.currentTarget.name, props.min);
+      props.setValue(event.currentTarget.name, Number(props.min));
+    } else {
+      props.setValue(event.currentTarget.name, Number(event.currentTarget.value));
     }
   }
   return(
