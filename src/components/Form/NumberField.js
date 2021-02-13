@@ -12,12 +12,16 @@ const NumberField = props => {
     } else {
       newValue =  event.currentTarget.value.replace(/[^0-9]/g, '');
     }
-    debugger
     if (props.max && Number(newValue) > Number(props.max)) {
       newValue = props.max;
     }
     props.setValue(event.currentTarget.name, newValue);
   };
+  const ensureMin = event => {
+    if (props.min && Number(event.currentTarget.value) < Number(props.min)) {
+      props.setValue(event.currentTarget.name, props.min);
+    }
+  }
   return(
     <div>
       <label htmlFor={props.name}>{props.label}</label>
@@ -26,7 +30,8 @@ const NumberField = props => {
         id={props.name}
         name={props.name}
         value={props.value}
-        onChange={changeHandler}>
+        onChange={changeHandler}
+        onBlur={ensureMin}>
       </input>
     </div>
   );

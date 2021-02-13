@@ -16,9 +16,9 @@ const FrameDesignerForm = props => {
     <form className="wwbjFrameDesigner">
       <fieldset>
         <legend>Frame Dimensions:</legend>
-        <NumberField name="width" label="Width:" value={props.state.width} setValue={updateValue} allowDecimal={true} max="36" />
-        <NumberField name="height" label="Height:" value={props.state.height} setValue={updateValue} allowDecimal={true} max="24" />
-        <NumberField name="thickness" label="Frame Thickness:" value={props.state.thickness} setValue={updateValue} allowDecimal={true} max="6" />
+        <NumberField name="width" label="Width:" value={props.state.width} setValue={updateValue} allowDecimal={true} min="6" max="36" />
+        <NumberField name="height" label="Height:" value={props.state.height} setValue={updateValue} allowDecimal={true} min="4" max="24" />
+        <NumberField name="thickness" label="Frame Thickness:" value={props.state.thickness} setValue={updateValue} allowDecimal={true} min="0.5" max="6" />
       </fieldset>
       <fieldset>
         <legend>Frame Style:</legend>
