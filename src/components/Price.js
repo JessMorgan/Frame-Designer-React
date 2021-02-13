@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CalculatePrice = (prices, width, height, thickness, stripes, profile, glazing, mat) => {
+const calculatePrice = (prices, width, height, thickness, stripes, profile, glazing, mat) => {
   let results = {};
   results.woodPrice = calculateWoodPrice(prices.wood, prices.woodThickness, width, height, thickness);
   results.stripeExtra = calculateStripePrice(prices.stripe, results.woodPrice, stripes);
@@ -11,7 +11,7 @@ const CalculatePrice = (prices, width, height, thickness, stripes, profile, glaz
   return results;
 }
 
-const CalculateWoodPrice = (price, thicknessMultiplier, width, height, thickness) => {
+const calculateWoodPrice = (price, thicknessMultiplier, width, height, thickness) => {
   const verticalInches = height + thickness * 2;
   const horizontalInches = width + thickness * 2;
 
@@ -57,13 +57,13 @@ const Price = props => {
   }, []);
   const [prices, setPrices] = React.useState({});
   const results = calculatePrice(prices,
-    Number(props.width),
-    Number(props.height),
-    Number(props.thickness),
-    Number(props.stripes),
-    props.profile,
-    props.glazing,
-    props.mat)
+    Number(props.state.width),
+    Number(props.state.height),
+    Number(props.state.thickness),
+    Number(props.state.stripes),
+    props.state.profile,
+    props.state.glazing,
+    props.state.mat)
   return(
     <div>
       <ul>

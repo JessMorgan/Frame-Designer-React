@@ -1,12 +1,12 @@
 {
   "wood":4,
-  "wood unit":"$/linear inch"
+  "wood unit":"$/linear inch",
   "woodThickness":0.25,
   "wood thickness unit":"multiplier per inch above 0.5",
   "stripe":0.1,
-  "strip unit":"fraction of wood cost"
+  "stripe unit":"fraction of wood cost",
   "glass":0.04,
-  "glass unit":"$/in^2"
+  "glass unit":"$/in^2",
   "glassMin":3,
   "mat":0.02,
   "mat unit":"$/in^2",
