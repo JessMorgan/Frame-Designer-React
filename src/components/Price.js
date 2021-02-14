@@ -1,13 +1,23 @@
 import React from 'react';
+import NumberFormat from 'react-number-format';
+
+const Money = ({value}) => {
+  return (
+    isNaN(value) ?
+      <span>-calculating-</span>
+      : <NumberFormat value={value} displayType='text' decimalScale={2} thousandSeparator={true} prefix={'$'} />
+  );
+}
 
 const calculatePrice = (prices, width, height, thickness, stripes, profile, glazing, mat) => {
   let results = {};
   results.woodPrice = calculateWoodPrice(prices.wood, prices.woodThickness, width, height, thickness);
   results.stripeExtra = calculateStripePrice(prices.stripe, results.woodPrice, stripes);
   results.profileExtra = calculateProfilePrice(prices['profile'+profile], results.woodPrice);
-  results.glassPrice = calculateGlassPrice(prices.glass, glazing, width, height);
-  results.matPrice = calculateMatPrice(prices.mat, mat, width, height);
-  results.total = results.woodPrice + results.stripeExtra + results.profileExtra + results.glassPrice + results.matPrice;
+  results.glassPrice = calculateGlassPrice(prices.glass, prices.glassMin, glazing, width, height);
+  results.matPrice = calculateMatPrice(prices.mat, prices.matMin, mat, width, height);
+  results.shipping = calculateShipping(prices, width, height, thickness, glazing);
+  results.total = results.woodPrice + results.stripeExtra + results.profileExtra + results.glassPrice + results.matPrice + results.shipping;
   return results;
 }
 
@@ -30,18 +40,33 @@ const calculateProfilePrice = (profilePrice, woodPrice) => {
   return profilePrice * woodPrice;
 }
 
-const calculateGlassPrice = (price, glazing, width, height) => {
-  if (glazing == 'No Glass') {
+const calculateGlassPrice = (price, minPrice, glazing, width, height) => {
+  if (glazing === 'No Glass') {
     return 0;
   }
-  return width * height * price;
+  return Math.max(minPrice, width * height * price);
 }
 
-const calculateMatPrice = (price, mat, width, height) => {
+const calculateMatPrice = (price, minPrice, mat, width, height) => {
   if (!mat) {
     return 0;
   }
-  return width * height * price;
+  return Math.max(minPrice, width * height * price);
+}
+
+const calculateShipping = (prices, width, height, thickness, glazing) => {
+  const linearInches = height + width + thickness * 4;
+  const maxShippingInches = 36 + 24 + 2*4;
+  const minShippingInches = 6 + 4 + 0.5*4;
+  const shippingPerInch = (prices.shippingMax - prices.shippingMin) / (maxShippingInches - minShippingInches);
+  let shipping = prices.shippingMin + shippingPerInch * (linearInches - minShippingInches);
+  if (shipping < prices.shippingMin) {
+    shipping = prices.shippingMin;
+  }
+  if (glazing === "Glass") {
+    shipping *= prices.shippingGlassFactor;
+  }
+  return shipping;
 }
 
 const Price = props => {
@@ -67,12 +92,13 @@ const Price = props => {
   return(
     <div>
       <ul>
-        <li>Wood: {results.woodPrice}</li>
-        <li>Stripes: {results.stripeExtra}</li>
-        <li>Profile: {results.profileExtra}</li>
-        <li>Glass: {results.glassPrice}</li>
-        <li>Mat: {results.matPrice}</li>
-        <li>Total: {results.total}</li>
+        <li>Wood: <Money value={results.woodPrice}/></li>
+        <li>Stripes: <Money value={results.stripeExtra}/></li>
+        <li>Profile: <Money value={results.profileExtra}/></li>
+        <li>Glass: <Money value={results.glassPrice}/></li>
+        <li>Mat: <Money value={results.matPrice}/></li>
+        <li>Shipping: <Money value={results.shipping}/></li>
+        <li>Total: <Money value={results.total}/></li>
       </ul>
     </div>
   );
