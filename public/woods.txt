@@ -1,7 +1,7 @@
 {
   "Walnut":{
     "width":8,
-    "height":12
+    "height":11.76
   },
   "Cherry":{
     "width":4,
