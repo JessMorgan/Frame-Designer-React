@@ -69,7 +69,7 @@ const calculateShipping = (prices, width, height, thickness, glazing) => {
   return shipping;
 }
 
-const Price = props => {
+const Price = ({state}) => {
   React.useEffect(() => {
     fetch('/price.txt')
       .then(response => {
@@ -82,13 +82,13 @@ const Price = props => {
   }, []);
   const [prices, setPrices] = React.useState({});
   const results = calculatePrice(prices,
-    Number(props.state.width),
-    Number(props.state.height),
-    Number(props.state.thickness),
-    Number(props.state.stripes),
-    props.state.profile,
-    props.state.glazing,
-    props.state.mat)
+    Number(state.width),
+    Number(state.height),
+    Number(state.thickness),
+    Number(state.stripes),
+    state.profile,
+    state.glazing,
+    state.mat)
   return(
     <div>
       <ul>

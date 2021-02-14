@@ -32,7 +32,7 @@ const App = () => {
       .then(profiles => {setProfileOptions(profiles);})
       .catch(error => console.log(`Error fetching profile options: ${error}`));
   }, []);
-  const [woodChoices, setWoodChoices] = React.useState([]);
+  const [woodChoices, setWoodChoices] = React.useState({});
   const [matColors, setMatColors] = React.useState({});
   const [profileOptions, setProfileOptions] = React.useState([]);
   const [state, setState] = React.useState({
@@ -53,7 +53,7 @@ const App = () => {
     <div className="App">
       <FrameDesignerForm state={state} update={setState} woods={woodChoices} matColors={matColors} profileOptions={profileOptions}/>
       <Price state={state}/>
-      <Preview state={state}/>
+      <Preview state={state} woods={woodChoices} matColors={matColors}/>
     </div>
   );
 }

@@ -12,6 +12,7 @@ const FrameDesignerForm = props => {
   const toggleMat = () => {
     props.update({...props.state, 'mat': !props.state.mat});
   }
+  const woodChoices = Object.entries(props.woods).map(w => w[0]);
   return(
     <form className="wwbjFrameDesigner">
       <fieldset>
@@ -23,10 +24,10 @@ const FrameDesignerForm = props => {
       <fieldset>
         <legend>Frame Style:</legend>
         {/* wood radios */}
-        <Select name="wood" label="Wood:" options={props.woods} selected={props.state.wood} onChange={updateByEvent} />
+        <Select name="wood" label="Wood:" options={woodChoices} selected={props.state.wood} onChange={updateByEvent} />
         <Select name="stripes" label="Number of Stripes:" options={[0,1,2]} selected={props.state.stripes} onChange={updateByEvent} />
         {props.state.stripes >= 1 &&
-          <Select name="stripeWood" label="Stripe Wood:" options={props.woods} selected={props.state.stripeWood} onChange={updateByEvent} />
+          <Select name="stripeWood" label="Stripe Wood:" options={woodChoices} selected={props.state.stripeWood} onChange={updateByEvent} />
         }
         <Select name="profile" label="Profile:" options={props.profileOptions} selected={props.state.profile} onChange={updateByEvent} />
         <Select name="glazing" label="Glazing:" options={["Glass","No Glass"]} selected={props.state.glazing} onChange={updateByEvent} />
