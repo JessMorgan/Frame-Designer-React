@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Background = ({extents, pixelWidth, woodChoices, wood}) => {
+const Background = ({extents, pixelWidth, woodChoices, wood, clipPath}) => {
   if (woodChoices[wood] === undefined) {
     return null;
   }
@@ -14,11 +14,46 @@ const Background = ({extents, pixelWidth, woodChoices, wood}) => {
       images.push(<image key={key} href={woodUrl} x = {x} y = {y} width = {width} height = {height} preserveAspectRatio="none" />);
     }
   }
-  return (<g id="background">{images}</g>);
+  return (<g id={clipPath ? "stripe" : "frame"} clipPath={clipPath}>{images}</g>);
 }
 
-const Stripes = ({extents, woodChoices, wood, stripes}) => {
-  return null;
+const Stripes = ({extents, thickness, pixelWidth, woodChoices, wood, stripes}) => {
+  if (stripes === "0") {
+    return null;
+  }
+  return (
+    <g>
+      <StripeClipPath extents={extents} thickness={thickness} woodChoices={woodChoices} wood={wood} stripes={stripes}/>
+      <Background extents={extents} pixelWidth={pixelWidth} woodChoices={woodChoices} wood={wood} clipPath="url(#stripeClip)" />
+    </g>
+  );
+};
+
+const StripeClipPath = ({extents, thickness, woodChoices, wood, stripes}) => {
+  if (stripes == "1") {
+    // Stripe 50%-75% from outer edge
+    const outerMargin = thickness / 2;
+    const innerMargin = thickness * 3 / 4;
+    const points = [
+      [outerMargin, outerMargin, extents[0] - outerMargin, innerMargin],
+      [outerMargin, extents[1] - innerMargin, extents[0] - outerMargin, extents[1] - outerMargin],
+      [outerMargin, outerMargin, innerMargin, extents[1] - outerMargin],
+      [extents[0] - innerMargin, outerMargin, extents[0] - outerMargin, extents[1] - outerMargin]
+    ];
+    const rects = points.map((r, index) => <rect key={index} x={r[0]} y={r[1]} width={r[2]-r[0]} height={r[3]-r[1]}/>);
+    return (
+      <clipPath id="stripeClip">
+        {rects}
+      </clipPath>
+    );
+  } else {
+    // 2
+    // Stripes 33%-50% & 66%-75% from outer edge
+    return (
+      <clipPath id="stripeClip">
+      </clipPath>
+    );
+  }
 };
 
 const Miters = ({extents, state, strokeWidth}) => {
@@ -84,7 +119,7 @@ const Preview = ({state, woods, matColors}) => {
   return(
     <svg version="1.1" baseProfile="full" xmlns="http://www.w3.org/2000/svg" width={svgWidth} height={svgHeight} viewBox={viewBox}>
       <Background extents = {extents} pixelWidth = {strokeWidth} woodChoices = {woods} wood = {state.wood} />
-      <Stripes extents = {extents} woodChoices = {woods} wood = {state.stripeWood} stripes = {state.stripes} />
+      <Stripes extents = {extents} thickness = {state.thickness} pixelWidth = {strokeWidth} woodChoices = {woods} wood = {state.stripeWood} stripes = {state.stripes} />
       <Profile/>
       <Mat extents = {extents} state = {state} strokeWidth = {strokeWidth} matColors={matColors} />
       <Artwork />
