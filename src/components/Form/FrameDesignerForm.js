@@ -25,7 +25,7 @@ const FrameDesignerForm = props => {
         <legend>Frame Style:</legend>
         {/* wood radios */}
         <Select name="wood" label="Wood:" options={woodChoices} selected={props.state.wood} onChange={updateByEvent} />
-        <Select name="stripes" label="Number of Stripes:" options={[0,1,2]} selected={props.state.stripes} onChange={updateByEvent} />
+        <Select name="stripes" label="Number of Stripes:" options={[0,1,1.5,2]} selected={props.state.stripes} onChange={updateByEvent} />
         {props.state.stripes >= 1 &&
           <Select name="stripeWood" label="Stripe Wood:" options={woodChoices} selected={props.state.stripeWood} onChange={updateByEvent} />
         }

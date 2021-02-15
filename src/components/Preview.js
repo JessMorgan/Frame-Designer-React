@@ -40,6 +40,19 @@ const StripeClipPath = ({extents, thickness, woodChoices, wood, stripes}) => {
         {rects}
       </clipPath>
     );
+  } else if (stripes == "1.5") {
+    // Stripes 33%-50% & 66%-100% from outer edge
+    const depths = [
+      [thickness / 3, thickness / 2],
+      [thickness * 2 / 3, thickness]
+    ];
+    let rects = generateStripe(extents, depths[0][0], depths[0][1]).concat(
+      generateStripe(extents, depths[1][0], depths[1][1]));
+    return (
+      <clipPath id="stripeClip">
+        {rects}
+      </clipPath>
+    );
   } else if (stripes == "2") {
     // Stripes 33%-50% & 66%-75% from outer edge
     const depths = [
