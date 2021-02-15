@@ -32,29 +32,40 @@ const Stripes = ({extents, thickness, pixelWidth, woodChoices, wood, stripes}) =
 const StripeClipPath = ({extents, thickness, woodChoices, wood, stripes}) => {
   if (stripes == "1") {
     // Stripe 50%-75% from outer edge
-    const outerMargin = thickness / 2;
-    const innerMargin = thickness * 3 / 4;
-    const points = [
-      [outerMargin, outerMargin, extents[0] - outerMargin, innerMargin],
-      [outerMargin, extents[1] - innerMargin, extents[0] - outerMargin, extents[1] - outerMargin],
-      [outerMargin, outerMargin, innerMargin, extents[1] - outerMargin],
-      [extents[0] - innerMargin, outerMargin, extents[0] - outerMargin, extents[1] - outerMargin]
-    ];
-    const rects = points.map((r, index) => <rect key={index} x={r[0]} y={r[1]} width={r[2]-r[0]} height={r[3]-r[1]}/>);
+    const startDepth = thickness / 2;
+    const endDepth = thickness * 3 / 4;
+    const rects = generateStripe(extents, startDepth, endDepth);
     return (
       <clipPath id="stripeClip">
         {rects}
       </clipPath>
     );
-  } else {
-    // 2
+  } else if (stripes == "2") {
     // Stripes 33%-50% & 66%-75% from outer edge
+    const depths = [
+      [thickness / 3, thickness / 2],
+      [thickness * 2 / 3, thickness * 3 / 4]
+    ];
+    let rects = generateStripe(extents, depths[0][0], depths[0][1]).concat(
+      generateStripe(extents, depths[1][0], depths[1][1]));
     return (
       <clipPath id="stripeClip">
+        {rects}
       </clipPath>
     );
   }
 };
+
+const generateStripe = (extents, startDepth, endDepth) => {
+  const points = [
+      [startDepth, startDepth, extents[0] - startDepth, endDepth],
+      [startDepth, extents[1] - endDepth, extents[0] - startDepth, extents[1] - startDepth],
+      [startDepth, startDepth, endDepth, extents[1] - startDepth],
+      [extents[0] - endDepth, startDepth, extents[0] - startDepth, extents[1] - startDepth]
+    ];
+  return rects = points.map((r, index) => <rect key={index} x={r[0]} y={r[1]} width={r[2]-r[0]} height={r[3]-r[1]}/>);
+
+}
 
 const Miters = ({extents, state, strokeWidth}) => {
   return (
