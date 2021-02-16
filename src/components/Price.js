@@ -5,19 +5,21 @@ const Money = ({value}) => {
   return (
     isNaN(value) ?
       <span>-calculating-</span>
-      : <NumberFormat value={value} displayType='text' decimalScale={2} thousandSeparator={true} prefix={'$'} />
+      : <NumberFormat value={value} displayType='text' decimalScale={2} fixedDecimalScale={true} thousandSeparator={true} prefix={'$'} />
   );
 }
 
-const calculatePrice = (prices, width, height, thickness, stripes, profile, glazing, mat) => {
+const calculatePrice = (prices, wood, width, height, thickness, stripes, profile, glazing, mat) => {
   let results = {};
-  results.woodPrice = calculateWoodPrice(prices.wood, prices.woodThickness, width, height, thickness);
+  const woodBasePrice = prices["wood" + wood] ? prices["wood" + wood] : prices.wood;
+  results.woodPrice = calculateWoodPrice(woodBasePrice, prices.woodThickness, width, height, thickness);
   results.stripeExtra = calculateStripePrice(prices.stripe, results.woodPrice, stripes);
   results.profileExtra = calculateProfilePrice(prices['profile'+profile], results.woodPrice);
   results.glassPrice = calculateGlassPrice(prices.glass, prices.glassMin, glazing, width, height);
   results.matPrice = calculateMatPrice(prices.mat, prices.matMin, mat, width, height);
   results.shipping = calculateShipping(prices, width, height, thickness, glazing);
-  results.total = results.woodPrice + results.stripeExtra + results.profileExtra + results.glassPrice + results.matPrice + results.shipping;
+  results.subtotal = results.woodPrice + results.stripeExtra + results.profileExtra + results.glassPrice + results.matPrice;
+  results.total = results.subtotal + results.shipping;
   return results;
 }
 
@@ -82,6 +84,7 @@ const Price = ({state}) => {
   }, []);
   const [prices, setPrices] = React.useState({});
   const results = calculatePrice(prices,
+    state.wood,
     Number(state.width),
     Number(state.height),
     Number(state.thickness),
@@ -97,6 +100,7 @@ const Price = ({state}) => {
         <li>Profile: <Money value={results.profileExtra}/></li>
         <li>Glass: <Money value={results.glassPrice}/></li>
         <li>Mat: <Money value={results.matPrice}/></li>
+        <li>Subtotal / Local Pickup/Delivery: <Money value={results.subtotal}/></li>
         <li>Shipping: <Money value={results.shipping}/></li>
         <li>Total: <Money value={results.total}/></li>
       </ul>

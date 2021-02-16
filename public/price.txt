@@ -1,5 +1,6 @@
 {
   "wood":3,
+  "woodWenge":3.5,
   "wood unit":"$/linear inch",
   "woodThickness":0.25,
   "wood thickness unit":"multiplier per inch above 0.5",
