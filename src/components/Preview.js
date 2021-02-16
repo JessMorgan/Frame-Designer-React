@@ -82,7 +82,7 @@ const generateStripe = (extents, startDepth, endDepth) => {
 
 const Miters = ({extents, state, strokeWidth}) => {
   return (
-    <g id="miters" fill="none" stroke="black" strokeWidth={strokeWidth}>
+    <g id="miters" fill="none" stroke="#333" strokeWidth={strokeWidth}>
       <rect x="0" y="0" width={extents[0]} height={extents[1]}/>
       <line x1="0" y1="0" x2={state.thickness} y2={state.thickness} />
       <line x1="0" y1={extents[1]} x2={state.thickness} y2={extents[1] - state.thickness} />
@@ -121,8 +121,8 @@ const Mat = ({extents, state, strokeWidth, matColors}) => {
   };
 
   return (
-    <g id="mat" stroke="black" strokeWidth={strokeWidth}>
-      <rect x={state.thickness} y={state.thickness} width={state.width} height={state.height} fill={matColors[state.matColor]} />
+    <g id="mat" stroke="#666" strokeWidth={strokeWidth}>
+      <rect x={state.thickness} y={state.thickness} width={state.width} height={state.height} fill={matColors[state.matColor]} stroke="#333" />
       <rect x={openingDimensions.x} y={openingDimensions.y} width={openingDimensions.width} height={openingDimensions.height} fill="white" />
       <rect x={innerOpening.x} y={innerOpening.y} width={innerOpening.width} height={innerOpening.height} fill="none" />
       <line x1={openingDimensions.x} y1={openingDimensions.y} x2={innerOpening.x} y2={innerOpening.y} />
