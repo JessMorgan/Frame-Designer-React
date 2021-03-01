@@ -3,10 +3,39 @@ body {
 	padding: 0;
 }
 
- .App {
-  text-align: center;
-  font-family: monospace;
+.contents {
+  display: contents;
 }
+
+dl {
+  margin-left: 1em;
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-row-gap: .5em;
+}
+
+.form-grid > label {
+  grid-column: 1;
+}
+
+.form-grid input, .form-grid select {
+  grid-column: 2;
+}
+
+.form-grid > .checkbox {
+  grid-column: 1 / -1;
+}
+
+/*
+.App {
+  text-align: center;
+}
+*/
 
 .App-logo {
   height: 180px;

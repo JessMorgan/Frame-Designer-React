@@ -25,7 +25,7 @@ const NumberField = props => {
     }
   }
   return(
-    <div>
+    <>
       <label htmlFor={props.name}>{props.label}</label>
       <input type="text"
         className="wwbjNumberField"
@@ -35,7 +35,7 @@ const NumberField = props => {
         onChange={changeHandler}
         onBlur={ensureMin}>
       </input>
-    </div>
+    </>
   );
 };
 

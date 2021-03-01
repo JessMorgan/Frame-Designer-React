@@ -4,7 +4,7 @@ import NumberFormat from 'react-number-format';
 const Money = ({value}) => {
   return (
     isNaN(value) ?
-      <span>-calculating-</span>
+      <span>-calculating/errored-</span>
       : <NumberFormat value={value} displayType='text' decimalScale={2} fixedDecimalScale={true} thousandSeparator={true} prefix={'$'} />
   );
 }
@@ -96,16 +96,21 @@ const Price = ({state}) => {
     state.mat)
   return(
     <div>
-      <ul>
+      <dl>
+        { /*
         <li>Wood: <Money value={results.woodPrice}/></li>
         <li>Stripes: <Money value={results.stripeExtra}/></li>
         <li>Profile: <Money value={results.profileExtra}/></li>
         <li>Glass: <Money value={results.glassPrice}/></li>
         <li>Mat: <Money value={results.matPrice}/></li>
-        <li>Subtotal / Local Pickup/Delivery: <Money value={results.subtotal}/></li>
-        <li>Shipping: <Money value={results.shipping}/></li>
-        <li>Total: <Money value={results.total}/></li>
-      </ul>
+        */ }
+        <dt>Local Pickup Price:</dt>
+        <dd><Money value={results.subtotal}/></dd>
+        <dt>Shipping:</dt>
+        <dd><Money value={results.shipping}/></dd>
+        <dt>Shipped Total:</dt>
+        <dd><Money value={results.total}/></dd>
+      </dl>
     </div>
   );
 };
