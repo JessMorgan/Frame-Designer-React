@@ -6,7 +6,8 @@
   "wood thickness unit":"multiplier per inch above 0.5",
   "stripe":0.1,
   "stripe unit":"fraction of wood cost",
-  "glass":0.06,
+  "glazingAcrylic":0.08,
+  "glazingGlass":0.06,
   "glass unit":"$/in^2",
   "glassMin":4,
   "mat":0.04,
@@ -19,5 +20,6 @@
   "profile unit":"fraction of wood cost",
   "shippingMin":5,
   "shippingMax":90,
-  "shippingGlassFactor":1.5
+  "shippingGlassFactor":1.5,
+  "shippingAcrylicFactor":1.4
 }

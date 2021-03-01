@@ -30,7 +30,7 @@ const FrameDesignerForm = props => {
           <Select name="stripeWood" label="Stripe Wood:" options={woodChoices} selected={props.state.stripeWood} onChange={updateByEvent} />
         }
         <Select name="profile" label="Profile:" options={props.profileOptions} selected={props.state.profile} onChange={updateByEvent} />
-        <Select name="glazing" label="Glazing:" options={["Glass","No Glass"]} selected={props.state.glazing} onChange={updateByEvent} />
+        <Select name="glazing" label="Glazing:" options={["Glass","Acrylic","None"]} selected={props.state.glazing} onChange={updateByEvent} />
       </fieldset>
       <fieldset>
         <legend>Mat Options:</legend>

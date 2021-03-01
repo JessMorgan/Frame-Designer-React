@@ -15,7 +15,7 @@ const calculatePrice = (prices, wood, width, height, thickness, stripes, profile
   results.woodPrice = calculateWoodPrice(woodBasePrice, prices.woodThickness, width, height, thickness);
   results.stripeExtra = calculateStripePrice(prices.stripe, results.woodPrice, stripes);
   results.profileExtra = calculateProfilePrice(prices['profile'+profile], results.woodPrice);
-  results.glassPrice = calculateGlassPrice(prices.glass, prices.glassMin, glazing, width, height);
+  results.glassPrice = calculateGlassPrice(prices, prices.glassMin, glazing, width, height);
   results.matPrice = calculateMatPrice(prices.mat, prices.matMin, mat, width, height);
   results.shipping = calculateShipping(prices, width, height, thickness, glazing);
   results.subtotal = results.woodPrice + results.stripeExtra + results.profileExtra + results.glassPrice + results.matPrice;
@@ -42,11 +42,11 @@ const calculateProfilePrice = (profilePrice, woodPrice) => {
   return profilePrice * woodPrice;
 }
 
-const calculateGlassPrice = (price, minPrice, glazing, width, height) => {
-  if (glazing === 'No Glass') {
+const calculateGlassPrice = (prices, minPrice, glazing, width, height) => {
+  if (glazing === 'None') {
     return 0;
   }
-  return Math.max(minPrice, width * height * price);
+  return Math.max(minPrice, width * height * prices["glazing" + glazing]);
 }
 
 const calculateMatPrice = (price, minPrice, mat, width, height) => {
@@ -67,6 +67,8 @@ const calculateShipping = (prices, width, height, thickness, glazing) => {
   }
   if (glazing === "Glass") {
     shipping *= prices.shippingGlassFactor;
+  } else if (glazing === "Acrylic") {
+    shipping *= prices.shippingAcrylicFactor;
   }
   return shipping;
 }
