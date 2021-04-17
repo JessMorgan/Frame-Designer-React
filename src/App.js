@@ -1,6 +1,7 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import FrameDesignerForm from './components/Form/FrameDesignerForm';
+import OrderButton from './components/OrderButton';
 import Preview from './components/Preview';
 import Price from './components/Price';
 
@@ -53,6 +54,7 @@ const App = () => {
     <div className="App">
       <FrameDesignerForm state={state} update={setState} woods={woodChoices} matColors={matColors} profileOptions={profileOptions}/>
       <Price state={state}/>
+      <p><OrderButton state={state}/></p>
       <Preview state={state} woods={woodChoices} matColors={matColors}/>
     </div>
   );

@@ -13,6 +13,10 @@ dl {
   grid-template-columns: auto 1fr;
 }
 
+.order {
+  margin-left: 1em;
+}
+
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 2fr;
@@ -30,12 +34,6 @@ dl {
 .form-grid > .checkbox {
   grid-column: 1 / -1;
 }
-
-/*
-.App {
-  text-align: center;
-}
-*/
 
 .App-logo {
   height: 180px;
