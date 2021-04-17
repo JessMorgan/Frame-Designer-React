@@ -16,7 +16,7 @@ const FrameDesignerForm = props => {
   const woodChoices = Object.entries(props.woods).map(w => w[0]);
   return(
     <form className="wwbjFrameDesigner">
-      <Section legend="Frame Dimensions:">
+      <Section legend="Frame Dimensions (in inches):">
         <NumberField name="width" label="Width:" value={props.state.width} setValue={updateValue} allowDecimal={true} min="6" max="36" />
         <NumberField name="height" label="Height:" value={props.state.height} setValue={updateValue} allowDecimal={true} min="4" max="24" />
         <NumberField name="thickness" label="Frame Thickness:" value={props.state.thickness} setValue={updateValue} allowDecimal={true} min="0.5" max="6" />
