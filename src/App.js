@@ -24,6 +24,14 @@ const App = () => {
       })
       .then(colors => {setMatColors(colors)})
       .catch(error => console.log(`Error fetching mat colors: ${error}`));
+    fetch('/art/index.txt')
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .then(art => {setArtChoices(art);})
+      .catch(error => console.log(`Error fetching art choices: ${error}`));
     fetch('/profiles.txt')
       .then(response => {
         if (response.ok) {
@@ -34,6 +42,7 @@ const App = () => {
       .catch(error => console.log(`Error fetching profile options: ${error}`));
   }, []);
   const [woodChoices, setWoodChoices] = React.useState({});
+  const [artChoices, setArtChoices] = React.useState({});
   const [matColors, setMatColors] = React.useState({});
   const [profileOptions, setProfileOptions] = React.useState([]);
   const [state, setState] = React.useState({
@@ -45,6 +54,9 @@ const App = () => {
     'stripeWood': 'Maple',
     'profile': 'Rectangular',
     'glazing': 'Glass',
+    'art': '/art/diploma.jpg',
+    'artWidth': 14,
+    'artHeight':11,
     'mat': true,
     'matColor': 'Blue',
     'matOpeningWidth': 5,

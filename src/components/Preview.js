@@ -92,10 +92,6 @@ const Miters = ({extents, state, strokeWidth}) => {
   );
 }
 
-const Artwork = () => {
-  return null;
-}
-
 const Profile = ({extents, thickness, profile}) => {
   switch(profile) {
     case 'Ogee':
@@ -269,6 +265,13 @@ const Mat = ({extents, state, strokeWidth, matColors}) => {
   openingDimensions.right = openingDimensions.x + state.matOpeningWidth;
   openingDimensions.bottom = openingDimensions.y + state.matOpeningHeight;
 
+  const frameOpening = {
+    "x": state.thickness,
+    "y": state.thickness,
+    "width": state.width,
+    "height": state.height
+  };
+
   const innerOpening = {
     "x": openingDimensions.x + matDepth,
     "y": openingDimensions.y + matDepth,
@@ -280,19 +283,48 @@ const Mat = ({extents, state, strokeWidth, matColors}) => {
 
   if (!state.mat) {
     return (
-      <rect x={state.thickness} y={state.thickness} width={state.width} height={state.height} fill="white" stroke="none" />
+      <g id="contents">
+        <rect x={frameOpening.x} y={frameOpening.y} width={frameOpening.width} height={frameOpening.height} fill="white" stroke="none" />
+        <Artwork state={state} extents={extents} bounds={frameOpening}/>
+      </g>
     );
   }
 
   return (
-    <g id="mat" stroke="#666" strokeWidth={strokeWidth}>
-      <rect x={state.thickness} y={state.thickness} width={state.width} height={state.height} fill={matColors[state.matColor]} stroke="#333" />
+    <g id="contents" stroke="#666" strokeWidth={strokeWidth}>
+      <rect x={frameOpening.x} y={frameOpening.y} width={frameOpening.width} height={frameOpening.height} fill={matColors[state.matColor]} stroke="#333" />
       <rect x={openingDimensions.x} y={openingDimensions.y} width={openingDimensions.width} height={openingDimensions.height} fill="white" />
       <rect x={innerOpening.x} y={innerOpening.y} width={innerOpening.width} height={innerOpening.height} fill="none" />
       <line x1={openingDimensions.x} y1={openingDimensions.y} x2={innerOpening.x} y2={innerOpening.y} />
       <line x1={openingDimensions.x} y1={openingDimensions.bottom} x2={innerOpening.x} y2={innerOpening.bottom} />
       <line x1={openingDimensions.right} y1={openingDimensions.y} x2={innerOpening.right} y2={innerOpening.y} />
       <line x1={openingDimensions.right} y1={openingDimensions.bottom} x2={innerOpening.right} y2={innerOpening.bottom} />
+      <Artwork state={state} extents={extents} bounds={innerOpening}/>
+    </g>
+  );
+}
+
+const Artwork = ({state, extents, bounds}) => {
+  if (!state.art || !state.artWidth || !state.artHeight) {
+    return (<></>);
+  }
+
+  const center = [extents[0] / 2, extents[1] / 2];
+  const imageExtents = {
+    "x": center[0] - (state.artWidth / 2),
+    "y": center[1] - (state.artHeight / 2),
+    "width": state.artWidth,
+    "height": state.artHeight,
+    "right": center[0] + (state.artWidth / 2),
+    "bottom": center[1] + (state.artHeight / 2)
+  };
+
+  return (
+    <g id="art">
+      <clipPath id="artClipPath">
+        <rect x={bounds.x} y={bounds.y} width={bounds.width} height={bounds.height}/>
+      </clipPath>
+      <image href={state.art} x={imageExtents.x} y={imageExtents.y} width={imageExtents.width} height={imageExtents.height} clipPath="url(#artClipPath)"/>
     </g>
   );
 }
@@ -310,7 +342,6 @@ const Preview = ({state, woods, matColors}) => {
       <Stripes extents = {extents} thickness = {state.thickness} pixelWidth = {strokeWidth} woodChoices = {woods} wood = {state.stripeWood} stripes = {state.stripes} />
       <Profile extents = {extents} thickness = {state.thickness} profile = {state.profile} />
       <Mat extents = {extents} state = {state} strokeWidth = {strokeWidth} matColors={matColors} />
-      <Artwork />
       <Miters extents = {extents} state = {state} strokeWidth = {strokeWidth} />
     </svg>
   );
