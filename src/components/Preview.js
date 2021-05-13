@@ -278,6 +278,12 @@ const Mat = ({extents, state, strokeWidth, matColors}) => {
     "height": openingDimensions.height - 2 * matDepth
   };
 
+  if (!state.mat) {
+    return (
+      <rect x={state.thickness} y={state.thickness} width={state.width} height={state.height} fill="white" stroke="none" />
+    );
+  }
+
   return (
     <g id="mat" stroke="#666" strokeWidth={strokeWidth}>
       <rect x={state.thickness} y={state.thickness} width={state.width} height={state.height} fill={matColors[state.matColor]} stroke="#333" />
