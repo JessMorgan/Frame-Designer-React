@@ -254,7 +254,7 @@ const generateProfileEdges = (extents, thickness, profileWidth, gradientName) =>
   ];
 }
 
-const Mat = ({extents, state, strokeWidth, matColors}) => {
+const Mat = ({extents, state, strokeWidth, matColors, artChoices}) => {
   const matDepth = 1/8;
   const openingDimensions = {
     "x": (extents[0] - state.matOpeningWidth)/2,
@@ -285,7 +285,7 @@ const Mat = ({extents, state, strokeWidth, matColors}) => {
     return (
       <g id="contents">
         <rect x={frameOpening.x} y={frameOpening.y} width={frameOpening.width} height={frameOpening.height} fill="white" stroke="none" />
-        <Artwork state={state} extents={extents} bounds={frameOpening}/>
+        <Artwork art={state.art} artChoices={artChoices} extents={extents} bounds={frameOpening}/>
       </g>
     );
   }
@@ -299,24 +299,24 @@ const Mat = ({extents, state, strokeWidth, matColors}) => {
       <line x1={openingDimensions.x} y1={openingDimensions.bottom} x2={innerOpening.x} y2={innerOpening.bottom} />
       <line x1={openingDimensions.right} y1={openingDimensions.y} x2={innerOpening.right} y2={innerOpening.y} />
       <line x1={openingDimensions.right} y1={openingDimensions.bottom} x2={innerOpening.right} y2={innerOpening.bottom} />
-      <Artwork state={state} extents={extents} bounds={innerOpening}/>
+      <Artwork art={state.art} artChoices={artChoices} extents={extents} bounds={innerOpening}/>
     </g>
   );
 }
 
-const Artwork = ({state, extents, bounds}) => {
-  if (!state.art || !state.artWidth || !state.artHeight) {
+const Artwork = ({art, artChoices, extents, bounds}) => {
+  if (!art || !artChoices[art] || !artChoices[art].filename || !artChoices[art].width || !artChoices[art].height) {
     return (<></>);
   }
 
   const center = [extents[0] / 2, extents[1] / 2];
   const imageExtents = {
-    "x": center[0] - (state.artWidth / 2),
-    "y": center[1] - (state.artHeight / 2),
-    "width": state.artWidth,
-    "height": state.artHeight,
-    "right": center[0] + (state.artWidth / 2),
-    "bottom": center[1] + (state.artHeight / 2)
+    "x": center[0] - (artChoices[art].width / 2),
+    "y": center[1] - (artChoices[art].height / 2),
+    "width": artChoices[art].width,
+    "height": artChoices[art].height,
+    "right": center[0] + (artChoices[art].width / 2),
+    "bottom": center[1] + (artChoices[art].height / 2)
   };
 
   return (
@@ -324,12 +324,12 @@ const Artwork = ({state, extents, bounds}) => {
       <clipPath id="artClipPath">
         <rect x={bounds.x} y={bounds.y} width={bounds.width} height={bounds.height}/>
       </clipPath>
-      <image href={state.art} x={imageExtents.x} y={imageExtents.y} width={imageExtents.width} height={imageExtents.height} clipPath="url(#artClipPath)"/>
+      <image href={`/art/${artChoices[art].filename}`} x={imageExtents.x} y={imageExtents.y} width={imageExtents.width} height={imageExtents.height} clipPath="url(#artClipPath)"/>
     </g>
   );
 }
 
-const Preview = ({state, woods, matColors}) => {
+const Preview = ({state, woods, matColors, artChoices}) => {
   const extents = [Number(state.width) + 2 * Number(state.thickness), Number(state.height) + 2 * Number(state.thickness)];
   const svgWidth = 400;
   const svgHeight = Math.round(extents[1] / extents[0] * svgWidth);
@@ -341,7 +341,7 @@ const Preview = ({state, woods, matColors}) => {
       <Background extents = {extents} pixelWidth = {strokeWidth} woodChoices = {woods} wood = {state.wood} />
       <Stripes extents = {extents} thickness = {state.thickness} pixelWidth = {strokeWidth} woodChoices = {woods} wood = {state.stripeWood} stripes = {state.stripes} />
       <Profile extents = {extents} thickness = {state.thickness} profile = {state.profile} />
-      <Mat extents = {extents} state = {state} strokeWidth = {strokeWidth} matColors={matColors} />
+      <Mat extents = {extents} state = {state} strokeWidth = {strokeWidth} matColors={matColors} artChoices={artChoices} />
       <Miters extents = {extents} state = {state} strokeWidth = {strokeWidth} />
     </svg>
   );

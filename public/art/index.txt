@@ -1,6 +1,7 @@
 {
+  "default":"Diploma",
   "Diploma":{
-    filename: "diploma.jpg",
+    "filename": "diploma.jpg",
     "width":14,
     "height":11
   }

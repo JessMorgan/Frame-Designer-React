@@ -30,7 +30,10 @@ const App = () => {
           return response.json();
         }
       })
-      .then(art => {setArtChoices(art);})
+      .then(art => {
+        setArtChoices(art);
+        setState({...state, 'art':art.default});
+      })
       .catch(error => console.log(`Error fetching art choices: ${error}`));
     fetch('/profiles.txt')
       .then(response => {
@@ -54,9 +57,6 @@ const App = () => {
     'stripeWood': 'Maple',
     'profile': 'Rectangular',
     'glazing': 'Glass',
-    'art': '/art/diploma.jpg',
-    'artWidth': 14,
-    'artHeight':11,
     'finish': 'Satin',
     'mat': true,
     'matColor': 'Blue',
@@ -65,10 +65,10 @@ const App = () => {
   });
   return (
     <div className="App">
-      <FrameDesignerForm state={state} update={setState} woods={woodChoices} matColors={matColors} profileOptions={profileOptions}/>
+      <FrameDesignerForm state={state} update={setState} woods={woodChoices} matColors={matColors} profileOptions={profileOptions} artChoices={artChoices}/>
       <Price state={state}/>
       <p><OrderButton state={state}/></p>
-      <Preview state={state} woods={woodChoices} matColors={matColors}/>
+      <Preview state={state} woods={woodChoices} matColors={matColors} artChoices={artChoices}/>
     </div>
   );
 }
