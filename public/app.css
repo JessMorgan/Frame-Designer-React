@@ -17,6 +17,10 @@ dl {
   margin-left: 1em;
 }
 
+svg {
+  margin-left: 1em;
+}
+
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 2fr;
