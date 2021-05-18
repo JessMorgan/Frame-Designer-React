@@ -23,6 +23,8 @@ Finish: ${state.finish}
 `
   if (state.mat) {
     text += `Mat: ${state.matOpeningWidth}x${state.matOpeningHeight}, ${state.matColor}`
+  } else {
+    text += "No mat"
   }
   return text;
 }
