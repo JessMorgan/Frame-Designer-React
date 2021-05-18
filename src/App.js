@@ -57,6 +57,7 @@ const App = () => {
     'art': '/art/diploma.jpg',
     'artWidth': 14,
     'artHeight':11,
+    'finish': 'Satin',
     'mat': true,
     'matColor': 'Blue',
     'matOpeningWidth': 5,

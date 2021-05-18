@@ -9,16 +9,17 @@ const Money = ({value}) => {
   );
 }
 
-const calculatePrice = (prices, wood, width, height, thickness, stripes, profile, glazing, mat) => {
+const calculatePrice = (prices, wood, width, height, thickness, stripes, profile, glazing, finish, mat) => {
   let results = {};
   const woodBasePrice = prices["wood" + wood] ? prices["wood" + wood] : prices.wood;
   results.woodPrice = calculateWoodPrice(woodBasePrice, prices.woodThickness, width, height, thickness);
   results.stripeExtra = calculateStripePrice(prices.stripe, results.woodPrice, stripes);
   results.profileExtra = calculateProfilePrice(prices['profile'+profile], results.woodPrice);
   results.glassPrice = calculateGlassPrice(prices, prices.glassMin, glazing, width, height);
+  results.finishPrice = calculateFinishPrice(prices, results.woodPrice, finish);
   results.matPrice = calculateMatPrice(prices.mat, prices.matMin, mat, width, height);
   results.shipping = calculateShipping(prices, width, height, thickness, glazing);
-  results.subtotal = results.woodPrice + results.stripeExtra + results.profileExtra + results.glassPrice + results.matPrice;
+  results.subtotal = results.woodPrice + results.stripeExtra + results.profileExtra + results.glassPrice + results.finishPrice + results.matPrice;
   results.total = results.subtotal + results.shipping;
   return results;
 }
@@ -47,6 +48,10 @@ const calculateGlassPrice = (prices, minPrice, glazing, width, height) => {
     return 0;
   }
   return Math.max(minPrice, width * height * prices["glazing" + glazing]);
+}
+
+const calculateFinishPrice = (prices, woodPrice, finish) => {
+  return prices["finish" + finish] * woodPrice;
 }
 
 const calculateMatPrice = (price, minPrice, mat, width, height) => {
@@ -93,6 +98,7 @@ const Price = ({state}) => {
     Number(state.stripes),
     state.profile,
     state.glazing,
+    state.finish,
     state.mat)
   return(
     <div>

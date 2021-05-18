@@ -19,6 +19,7 @@ Stripes: ${state.stripes}`
   text += `
 Profile: ${state.profile}
 Glazing: ${state.glazing}
+Finish: ${state.finish}
 `
   if (state.mat) {
     text += `Mat: ${state.matOpeningWidth}x${state.matOpeningHeight}, ${state.matColor}`
