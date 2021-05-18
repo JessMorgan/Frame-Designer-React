@@ -34,7 +34,6 @@ const OrderButton = ({state}) => {
     return `mailto:${TO}?subject=${SUBJECT}&body=${encodeURIComponent(TEXT + verbalize(state))}`;
   }
 
-console.log(generateMailtoLink());
   return (
       <a className="order" target="_blank" href={generateMailtoLink()}>Initiate purchase of (or ask questions about) this frame</a>
     );
