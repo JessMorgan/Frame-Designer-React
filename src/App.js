@@ -32,7 +32,10 @@ const App = () => {
       })
       .then(art => {
         setArtChoices(art);
-        setState({...state, 'art':art.default});
+        setState({...state,
+          'artName':art.default,
+          'art':art[art.default]
+        });
       })
       .catch(error => console.log(`Error fetching art choices: ${error}`));
     fetch('/profiles.txt')
@@ -49,6 +52,7 @@ const App = () => {
   const [matColors, setMatColors] = React.useState({});
   const [profileOptions, setProfileOptions] = React.useState([]);
   const [state, setState] = React.useState({
+    'art': {filename: 'n/a', width: 5, height: 5},
     'width': 7,
     'height': 5,
     'thickness': 1,
@@ -68,7 +72,7 @@ const App = () => {
       <FrameDesignerForm state={state} update={setState} woods={woodChoices} matColors={matColors} profileOptions={profileOptions} artChoices={artChoices}/>
       <Price state={state}/>
       <p><OrderButton state={state}/></p>
-      <Preview state={state} woods={woodChoices} matColors={matColors} artChoices={artChoices}/>
+      <Preview state={state} woods={woodChoices} matColors={matColors}/>
     </div>
   );
 }

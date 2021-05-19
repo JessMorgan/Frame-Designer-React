@@ -10,12 +10,27 @@ const FrameDesignerForm = props => {
   const updateByEvent = (event) => {
     updateValue(event.currentTarget.name, event.currentTarget.value);
   }
+  const updateArt = (event) => {
+    let name = event.currentTarget.value;
+    props.update({...props.state, 'artName': name, 'art': props.artChoices[name]});
+  }
+  const updateArtDimensions = (key, value) => {
+    let tokens = key.split('-');
+    props.update({...props.state,
+      'art':{...props.state.art,
+        [tokens[tokens.length - 1]]: value}});
+  }
   const toggleMat = () => {
     props.update({...props.state, 'mat': !props.state.mat});
   }
   const woodChoices = Object.entries(props.woods).map(w => w[0]);
   return(
     <form className="wwbjFrameDesigner">
+      <Section legend="App Settings:">
+        <Select name="art" label="Art (for preview):" options={Object.keys(props.artChoices).filter(key => key != 'default')} selected={props.state.artName} onChange={updateArt} />
+        <NumberField name="art-width" label="Art Width:" value={props.state.art.width} setValue={updateArtDimensions} allowDecimal={true} min="6" max="36" />
+        <NumberField name="art-height" label="Art Height:" value={props.state.art.height} setValue={updateArtDimensions} allowDecimal={true} min="4" max="24" />
+      </Section>
       <Section legend="Frame Dimensions (in inches):">
         <NumberField name="width" label="Width:" value={props.state.width} setValue={updateValue} allowDecimal={true} min="6" max="36" />
         <NumberField name="height" label="Height:" value={props.state.height} setValue={updateValue} allowDecimal={true} min="4" max="24" />

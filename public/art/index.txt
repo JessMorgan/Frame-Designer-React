@@ -1,8 +1,38 @@
 {
-  "default":"Diploma",
+  "default":"Glacier",
   "Diploma":{
     "filename": "diploma.jpg",
     "width":14,
     "height":11
+  },
+  "Landscape":{
+    "filename": "Landscape.jpg",
+    "width":16,
+    "height":9
+  },
+  "Alberta":{
+    "filename": "Alberta.jpg",
+    "width":8,
+    "height":6
+  },
+  "Glacier":{
+    "filename": "Glacier.jpg",
+    "width":7,
+    "height":5
+  },
+  "Kjeragbolten":{
+    "filename": "Kjeragbolten.jpg",
+    "width":9,
+    "height":16
+  },
+  "Machu Picchu":{
+    "filename": "Machu-Picchu.jpg",
+    "width":8,
+    "height":8
+  },
+  "Norway Panorama":{
+    "filename": "Norway-panorama.jpg",
+    "width":36,
+    "height":7.9
   }
 }
