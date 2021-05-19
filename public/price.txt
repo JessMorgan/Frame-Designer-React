@@ -18,6 +18,7 @@
   "mat unit":"$/in^2",
   "matMin":3,
   "profileRectangular":0,
+  "profileBevel":0.15,
   "profileOgee":0.2,
   "profileBead":0.2,
   "profileMolding":0.25,

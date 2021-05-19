@@ -1,4 +1,5 @@
 ["Rectangular",
+"Bevel",
 "Ogee",
 "Bead",
 "Molding"]
