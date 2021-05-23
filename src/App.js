@@ -34,7 +34,7 @@ const App = () => {
         setArtChoices(art);
         setState({...state,
           'artName':art.default,
-          'art':art[art.default]
+          'art':{url:'',...art[art.default]}
         });
       })
       .catch(error => console.log(`Error fetching art choices: ${error}`));
@@ -52,7 +52,8 @@ const App = () => {
   const [matColors, setMatColors] = React.useState({});
   const [profileOptions, setProfileOptions] = React.useState([]);
   const [state, setState] = React.useState({
-    'art': {filename: 'n/a', width: 5, height: 5},
+    'artName': 'None',
+    'art': {filename: '', url: '', width: 5, height: 5},
     'width': 7,
     'height': 5,
     'thickness': 1,

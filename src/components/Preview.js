@@ -305,10 +305,11 @@ const Mat = ({extents, state, strokeWidth, matColors}) => {
 }
 
 const Artwork = ({art, extents, bounds}) => {
-  if (!art || !art.filename || !art.width || !art.height) {
+  if (!art || !art.width || !art.height || (!art.filename && !art.url)) {
     return (<></>);
   }
 
+  const link = art.filename ? `/art/${art.filename}` : art.url ? art.url : '';
   const center = [extents[0] / 2, extents[1] / 2];
   const imageExtents = {
     "x": center[0] - (art.width / 2),
@@ -324,7 +325,7 @@ const Artwork = ({art, extents, bounds}) => {
       <clipPath id="artClipPath">
         <rect x={bounds.x} y={bounds.y} width={bounds.width} height={bounds.height}/>
       </clipPath>
-      <image href={`/art/${art.filename}`} x={imageExtents.x} y={imageExtents.y} width={imageExtents.width} height={imageExtents.height} clipPath="url(#artClipPath)"/>
+      <image href={link} x={imageExtents.x} y={imageExtents.y} width={imageExtents.width} height={imageExtents.height} clipPath="url(#artClipPath)"/>
     </g>
   );
 }

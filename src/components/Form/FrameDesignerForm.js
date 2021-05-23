@@ -12,9 +12,20 @@ const FrameDesignerForm = props => {
   }
   const updateArt = (event) => {
     let name = event.currentTarget.value;
-    props.update({...props.state, 'artName': name, 'art': props.artChoices[name]});
+    if (name == 'None') {
+      props.update({...props.state, 'artName': name, 'art': {width:0, height:0, url:'', filename:''}});
+    } else if (name == 'Web Address') {
+      props.update({...props.state, 'artName': name, 'art': {...props.state.art, filename:'', url:''}});
+    } else if (name == 'Upload Your Own') {
+      props.update({...props.state, 'artName': name, 'art': {...props.state.art, filename:'', url:''}});
+    } else {
+      props.update({...props.state, 'artName': name, 'art': {url:'', ...props.artChoices[name]}});
+    }
   }
-  const updateArtDimensions = (key, value) => {
+  const updateArtPropertyByEvent = (event) => {
+    updateArtProperty(event.currentTarget.name, event.currentTarget.value);
+  }
+  const updateArtProperty = (key, value) => {
     let tokens = key.split('-');
     props.update({...props.state,
       'art':{...props.state.art,
@@ -27,9 +38,27 @@ const FrameDesignerForm = props => {
   return(
     <form className="wwbjFrameDesigner">
       <Section legend="App Settings:">
-        <Select name="art" label="Art (for preview):" options={Object.keys(props.artChoices).filter(key => key != 'default')} selected={props.state.artName} onChange={updateArt} />
-        <NumberField name="art-width" label="Art Width:" value={props.state.art.width} setValue={updateArtDimensions} allowDecimal={true} min="6" max="36" />
-        <NumberField name="art-height" label="Art Height:" value={props.state.art.height} setValue={updateArtDimensions} allowDecimal={true} min="4" max="24" />
+        <Select name="art" label="Art (for preview):" options={['None','Web Address','Upload Your Own'].concat(Object.keys(props.artChoices).filter(key => key != 'default'))} selected={props.state.artName} onChange={updateArt} />
+        { props.state.artName != 'None' &&
+          <div className="contents">
+            <NumberField name="art-width" label="Art Width:" value={props.state.art.width} setValue={updateArtProperty} allowDecimal={true} max="36" />
+            <NumberField name="art-height" label="Art Height:" value={props.state.art.height} setValue={updateArtProperty} allowDecimal={true} max="24" />
+          </div>
+        }
+        { props.state.artName == 'Web Address' &&
+          <div className="contents">
+            <label htmlFor="art-url">Web Address:</label>
+            <input type="text"
+              id="art-url"
+              name="art-url"
+              value={props.state.art.url}
+              onChange={updateArtPropertyByEvent} />
+          </div>
+        }
+        { props.state.artName == 'Upload Your Own' &&
+          <div className="contents">
+          </div>
+        }
       </Section>
       <Section legend="Frame Dimensions (in inches):">
         <NumberField name="width" label="Width:" value={props.state.width} setValue={updateValue} allowDecimal={true} min="6" max="36" />
