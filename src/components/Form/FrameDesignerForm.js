@@ -15,9 +15,9 @@ const FrameDesignerForm = props => {
     if (name == 'None') {
       props.update({...props.state, 'artName': name, 'art': {width:0, height:0, url:'', filename:''}});
     } else if (name == 'Web Address') {
-      props.update({...props.state, 'artName': name, 'art': {...props.state.art, filename:'', url:''}});
+      props.update({...props.state, 'artName': name, 'art': {url:'', ...props.state.art, filename:''}});
     } else if (name == 'Upload Your Own') {
-      props.update({...props.state, 'artName': name, 'art': {...props.state.art, filename:'', url:''}});
+      props.update({...props.state, 'artName': name, 'art': {url:'', ...props.state.art, filename:''}});
     } else {
       props.update({...props.state, 'artName': name, 'art': {url:'', ...props.artChoices[name]}});
     }
@@ -30,6 +30,11 @@ const FrameDesignerForm = props => {
     props.update({...props.state,
       'art':{...props.state.art,
         [tokens[tokens.length - 1]]: value}});
+  }
+  const updateUserArt = (event) => {
+    props.update({...props.state,
+      'art':{...props.state.art,
+        url: URL.createObjectURL(event.target.files[0])}});
   }
   const toggleMat = () => {
     props.update({...props.state, 'mat': !props.state.mat});
@@ -57,6 +62,11 @@ const FrameDesignerForm = props => {
         }
         { props.state.artName == 'Upload Your Own' &&
           <div className="contents">
+            <label htmlFor="artUpload">Choose a file:</label>
+            <input type="file"
+              id="artUpload"
+              name="artUpload"
+              onChange={updateUserArt} />
           </div>
         }
       </Section>
