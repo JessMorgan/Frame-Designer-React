@@ -84,7 +84,7 @@ const FrameDesignerForm = props => {
         }
         <Select name="profile" label="Profile:" options={props.profileOptions} selected={props.state.profile} onChange={updateByEvent} />
         <Select name="glazing" label="Glazing:" options={["Glass","Acrylic","None"]} selected={props.state.glazing} onChange={updateByEvent} />
-        <Select name="finish" label="Finish:" options={["Matte","Satin","Semi-Gloss"]} selected={props.state.finish} onChange={updateByEvent} />
+        <Select name="finish" label="Finish:" options={["Matte","Satin","Semi-Gloss","Gloss"]} selected={props.state.finish} onChange={updateByEvent} />
       </Section>
       <Section legend="Mat Options:">
         <div className="checkbox">

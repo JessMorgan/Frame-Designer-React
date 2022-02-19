@@ -13,6 +13,7 @@
   "finishMatte":0,
   "finishSatin":0.1,
   "finishSemi-Gloss":0.2,
+  "finishGloss":0.25,
   "finish unit":"fraction of wood cost",
   "mat":0.04,
   "mat unit":"$/in^2",
