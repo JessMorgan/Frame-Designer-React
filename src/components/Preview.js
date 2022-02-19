@@ -6,7 +6,7 @@ const Background = ({extents, pixelWidth, woodChoices, wood, clipPath}) => {
   }
   const width = woodChoices[wood].width;
   const height = woodChoices[wood].height;
-  const woodUrl = "/woods/" + wood + ".jpg";
+  const woodUrl = "woods/" + wood + ".jpg";
   let images = [];
   for (let x = 0; x < extents[0]; x += width - pixelWidth) {
     for (let y = 0; y < extents[1]; y += height - pixelWidth) {
@@ -309,7 +309,7 @@ const Artwork = ({art, extents, bounds}) => {
     return (<></>);
   }
 
-  const link = art.filename ? `/art/${art.filename}` : art.url ? art.url : '';
+  const link = art.filename ? `art/${art.filename}` : art.url ? art.url : '';
   const center = [extents[0] / 2, extents[1] / 2];
   const imageExtents = {
     "x": center[0] - (art.width / 2),

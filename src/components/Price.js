@@ -80,7 +80,7 @@ const calculateShipping = (prices, width, height, thickness, glazing) => {
 
 const Price = ({state}) => {
   React.useEffect(() => {
-    fetch('/price.txt')
+    fetch('price.txt')
       .then(response => {
         if (response.ok) {
           return response.json();

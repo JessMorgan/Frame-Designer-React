@@ -8,7 +8,7 @@ import Price from './components/Price';
 
 const App = () => {
   React.useEffect(() => {
-    fetch('/woods.txt')
+    fetch('woods.txt')
       .then(response => {
         if (response.ok) {
           return response.json();
@@ -16,7 +16,7 @@ const App = () => {
       })
       .then(woods => {setWoodChoices(woods);})
       .catch(error => console.log(`Error fetching wood choices: ${error}`));
-    fetch('/mat-colors.txt')
+    fetch('mat-colors.txt')
       .then(response => {
         if (response.ok) {
           return response.json();
@@ -24,7 +24,7 @@ const App = () => {
       })
       .then(colors => {setMatColors(colors)})
       .catch(error => console.log(`Error fetching mat colors: ${error}`));
-    fetch('/art/index.txt')
+    fetch('art/index.txt')
       .then(response => {
         if (response.ok) {
           return response.json();
@@ -38,7 +38,7 @@ const App = () => {
         });
       })
       .catch(error => console.log(`Error fetching art choices: ${error}`));
-    fetch('/profiles.txt')
+    fetch('profiles.txt')
       .then(response => {
         if (response.ok) {
           return response.json();
